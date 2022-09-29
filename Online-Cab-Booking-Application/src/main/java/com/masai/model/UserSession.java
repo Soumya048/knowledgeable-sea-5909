@@ -28,7 +28,7 @@ public class UserSession {
 	@Column(unique = true)
 	private Integer userId;
 	
-	private String uuid;
+	private String uuId;
 	
 	@NotNull
 	private String userType;
