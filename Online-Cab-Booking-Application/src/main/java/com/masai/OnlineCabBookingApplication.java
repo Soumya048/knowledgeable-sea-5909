@@ -8,7 +8,7 @@ public class OnlineCabBookingApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OnlineCabBookingApplication.class, args);
-		System.out.println("Running.....");
+		
 	}
 
 }
