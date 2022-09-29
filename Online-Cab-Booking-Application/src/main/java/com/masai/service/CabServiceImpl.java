@@ -57,7 +57,7 @@ public class CabServiceImpl implements CabService{
 	@Override
 	public List<Cab> viewCabsOfType(String cabType) throws CabException {
 		
-		List<Cab> list = dao.findAllByType(cabType);
+		List<Cab> list = dao.findAllBycabTpye(cabType);
 		
 		if(list.size() < 0) {
 			

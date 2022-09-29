@@ -2,9 +2,13 @@ package com.masai.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.masai.exception.CustomerException;
 import com.masai.model.Customer;
 
+
+@Service
 public class CustomerServiceImpl implements CustomerService {
 
 	@Override
