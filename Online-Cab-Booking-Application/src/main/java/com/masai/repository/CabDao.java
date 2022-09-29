@@ -10,8 +10,8 @@ import com.masai.model.Cab;
 @Repository
 public interface CabDao extends JpaRepository<Cab, Integer>{
 
-	
-	public List<Cab> findAllByType(String cabType);
+
+	public List<Cab> findAllBycabTpye(String cabType);
 		
 	
 }
