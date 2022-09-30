@@ -8,9 +8,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 @Data
@@ -27,6 +25,8 @@ public class Cab {
 	private Double perKmRate;
 	@NotNull
 	private String available;
+	
+	
 
 }
 
