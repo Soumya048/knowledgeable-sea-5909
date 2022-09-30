@@ -35,4 +35,7 @@ public class AbstractUser {
 	
 	@Email(message="Please enter the valid email Id")
 	private String email;
+	
+	@NotNull
+	private String userType;
 }
