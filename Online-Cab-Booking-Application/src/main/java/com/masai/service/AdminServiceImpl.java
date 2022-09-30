@@ -2,46 +2,171 @@ package com.masai.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.dto.LoginDTO;
 import com.masai.exception.AdminException;
 import com.masai.exception.LoginException;
+import com.masai.exception.TripBookingException;
 import com.masai.model.Admin;
+import com.masai.model.AdminSession;
 import com.masai.model.Customer;
 import com.masai.model.Driver;
 import com.masai.model.TripBooking;
+import com.masai.repository.AdminDao;
+import com.masai.repository.AdminSessionDao;
+import com.masai.repository.CustomerDao;
+import com.masai.repository.TripbookingDao;
 
 @Service
 public class AdminServiceImpl implements AdminService {
+	
+	@Autowired
+	AdminDao adminDao;
+	
+	@Autowired
+	AdminSessionDao adminSessionDao;
+	
+	@Autowired
+	TripbookingDao tripBookingDao;
+	
+	
+//	@Autowired
+//	DriverDao driverDao;
 
+	@Autowired
+	CustomerDao customerDao;
+	
+	
 	@Override
-	public Admin adminLogin(Admin admin) throws AdminException {
-		// TODO Auto-generated method stub
-		return null;
+	public Admin adminRegister(Admin admin) {
+		Admin registeredAdmin = adminDao.save(admin);
+		return registeredAdmin;
+	}
+	
+	@Override
+	public AdminSession adminLogin(LoginDTO loginDto) throws LoginException {
+		
+		Optional<Admin> opt = adminDao.findByAbstractUserMobile(loginDto.getMobile());
+		
+		
+		if(!opt.isPresent()) {
+			throw new LoginException("User Not found");
+		}
+		
+		Admin existingAdmin = opt.get();
+		Optional<AdminSession> sessionOpt = adminSessionDao.findByAdminId(existingAdmin.getAdminId());
+		
+		if(sessionOpt.isPresent()) {
+			throw new LoginException("User already logged in");
+		}
+		
+		if(existingAdmin.getAbstractUser().getPassword().equals(loginDto.getPassword())) {
+			
+			UUID randomUUID = UUID.randomUUID();
+			String key = randomUUID.toString().replaceAll("-", "");
+			
+			
+			AdminSession newAdminSession = new AdminSession();
+			
+			newAdminSession.setAdminId(existingAdmin.getAdminId());
+			newAdminSession.setUuid(key);
+			newAdminSession.setUserType("Admin");
+			newAdminSession.setSessionStartTime(LocalDateTime.now());
+			newAdminSession.setSessionEndTime(LocalDateTime.now().plusHours(2));
+			return adminSessionDao.save(newAdminSession);
+		}
+		else
+			throw new LoginException("Password Incorrect, Please Try Again");
 	}
 
 	@Override
-	public Admin updateAdmin(Admin admin, String Username, String key) {
-		// TODO Auto-generated method stub
-		return null;
+	public Admin updateAdmin(Admin admin, String Username, String key) throws LoginException {
+		Admin updated = null;
+		Optional<AdminSession> opt = adminSessionDao.findByUuid(key);
+		
+		if(opt.isPresent()) {
+			Optional<Admin> adminOpt = adminDao.findByAbstractUserUsername(Username);
+			
+			System.out.println(adminOpt.get());
+			
+			if(adminOpt.isPresent()) {
+				
+				Integer id = admin.getAdminId();
+				Admin newData = new Admin();
+				newData.setAdminId(id);
+				newData.setAbstractUser(admin.getAbstractUser());
+				
+				updated = adminDao.save(newData);
+				
+			}
+			
+		}
+		else 
+			throw new LoginException("Admin is not logged in, Please Login first");
+		
+		return updated;
+		
 	}
 
 	@Override
-	public String deleteAdminById(Integer adminId, String key) {
-		// TODO Auto-generated method stub
-		return null;
+	public Admin deleteAdminById(Integer adminId, String key) throws LoginException {
+		
+		Admin existingAdmin = null;
+		
+		Optional<AdminSession> opt = adminSessionDao.findByUuid(key);
+		
+		if(opt.isPresent()) {
+			Optional<Admin> adminOpt = adminDao.findById(adminId);
+			
+			if(adminOpt.isPresent()) {
+				existingAdmin = adminOpt.get();
+				adminDao.delete(existingAdmin);
+			}
+			else
+				throw new AdminException("Admin not found with id: " + adminId);
+		}
+		else 
+			throw new LoginException("Admin is not logged in, Please Login first");
+		
+		return existingAdmin;
 	}
 
 	@Override
 	public String logoutAdmin(String key) throws LoginException {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<AdminSession> opt = adminSessionDao.findByUuid(key);
+
+		if(!opt.isPresent()) {
+			throw new LoginException("Not Logged in, Log in first");
+		}
+		adminSessionDao.delete(opt.get());
+		return "Log out Successfull";
 	}
 
 	@Override
-	public List<TripBooking> getAllTrips(Integer customerId, String key) {
-		// TODO Auto-generated method stub
+	public List<TripBooking> getAllTrips(Integer customerId, String key) throws TripBookingException, LoginException {
+		
+//		Optional<AdminSession> opt = adminSessionDao.findByUuid(key);
+//		
+//		if(!opt.isPresent()) {
+//			throw new LoginException("Please Login first");
+//		}
+//		
+//		Customer existingCustomer = customerDao.findById(customerId);
+//		
+//		
+//		List<TripBooking> allTrips = tripBookingDao.findAll();
+//		
+//		if(allTrips.size() > 0) {
+//			return allTrips;
+//		}
+//		else
+//			throw new TripBookingException("No trips found");
+		
 		return null;
 	}
 
@@ -75,5 +200,7 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }
