@@ -27,7 +27,7 @@ public class TripBooking {
 	private LocalDate fromDate;
 	private LocalDate toDate;
 	
-	private TripStatus status;
+	private String status;
 
 	private Double distanceInKm;
 

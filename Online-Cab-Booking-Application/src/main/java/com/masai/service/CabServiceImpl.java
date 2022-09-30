@@ -12,12 +12,12 @@ import ch.qos.logback.core.joran.conditional.ElseAction;
 public class CabServiceImpl implements CabService{
 
 	@Autowired
-	private CabDao dao;
+	private CabDao cabDao;
 	
 	@Override
 	public Cab insertCab(Cab cab) {
 		
-		Cab saveCab = dao.save(cab);
+		Cab saveCab = cabDao.save(cab);
 		
 		return saveCab;
 	}
@@ -25,53 +25,57 @@ public class CabServiceImpl implements CabService{
 	@Override
 	public Cab updateCab(Cab cab) throws CabException {
 		
-		Optional<Cab> opt = dao.findById(cab.getCabId());
+		Optional<Cab> opt = cabDao.findById(cab.getCabId());
 		
 		if(opt.isPresent()) {
 			
-			return dao.save(cab);
+			return cabDao.save(cab);
 		}
 		
 		else 
-			
 		  throw new CabException("Invalid Cab Details");
 	}
 
 	@Override
 	public Cab deleteCab(int cabId) throws CabException {
 		
-    Optional<Cab> opt = dao.findById(cabId);
+		Optional<Cab> opt = cabDao.findById(cabId);
 		
 		if(opt.isPresent()) {
 			
 			Cab existingCab = opt.get();
 			 
-			 dao.delete(existingCab);
+			cabDao.delete(existingCab);
 			
-			 return existingCab;
-		}else
-			
+			return existingCab;
+		}
+		else
 			throw new CabException("Cab does not exist with this Id :"+cabId);
 	}
 
 	@Override
 	public List<Cab> viewCabsOfType(String cabType) throws CabException {
 		
-		List<Cab> list = dao.findAllBycabTpye(cabType);
+		List<Cab> cabList = cabDao.findByCabType(cabType);
 		
-		if(list.size() < 0) {
-			
-			throw new CabException("Cab did not find");
+		if(cabList.size() < 0) {	
+			throw new CabException("Cab not found " + cabType);
 		}
-		return list;
+		
+		return cabList;
 					
 	}
 	
 
 	@Override
-	public int countCabsOfType(String cabTpye) throws CabException {
+	public Integer countCabsOfType(String cabTpye) throws CabException {
 		
-		return 0;
+		Integer cabCount = cabDao.countCabByType(cabTpye);
+		
+		if(cabCount == 0) {
+			throw new CabException("No Cab found with " + cabTpye);
+		}
+		return cabCount;
 	}
 	
 	

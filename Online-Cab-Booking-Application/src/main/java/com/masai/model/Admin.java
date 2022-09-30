@@ -23,7 +23,7 @@ public class Admin {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "admin_generator")
 	private Integer adminId;
 	
-//	@Embedded
-//	private AbstractUser abstractUser;
+	@Embedded
+	private AbstractUser abstractUser;
 	
 }
