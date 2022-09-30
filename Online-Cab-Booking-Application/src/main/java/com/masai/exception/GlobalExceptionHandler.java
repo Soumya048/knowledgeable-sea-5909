@@ -13,6 +13,19 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	
+	
+	@ExceptionHandler(LoginException.class)
+	public ResponseEntity<ErrorDetails> accountExceptionHandler(LoginException le, WebRequest req) {
+		ErrorDetails err = new ErrorDetails();
+		
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(le.getMessage());
+		err.setDetails(req.getDescription(false));
+		
+		return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
+	}
+	
+	
 	@ExceptionHandler(TripBookingException.class)
 	public ResponseEntity<ErrorDetails> accountExceptionHandler(TripBookingException le, WebRequest req) {
 		ErrorDetails err = new ErrorDetails();
@@ -24,8 +37,7 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
 	}
 	
-	
-	
+
 	
 	
 	
