@@ -2,11 +2,11 @@
 
 
 ## Tech Stack
-
 - Java
 - Spring Framework
 - Spring Boot
 - Spring Data JPA
+- Hibernate
 - Spring Validation
 - MySQL
 - Lambok
@@ -20,7 +20,7 @@
 - Cab Management Module
 - Trip Booking Management Module
 
-#Features
+## Features
 
 -
 -
