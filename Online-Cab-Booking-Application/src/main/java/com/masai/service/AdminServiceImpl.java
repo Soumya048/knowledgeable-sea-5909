@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.masai.dto.LoginDTO;
 import com.masai.exception.AdminException;
+import com.masai.exception.CustomerException;
+import com.masai.exception.DriverException;
 import com.masai.exception.LoginException;
 import com.masai.exception.TripBookingException;
 import com.masai.model.Admin;
@@ -20,6 +22,7 @@ import com.masai.model.TripBooking;
 import com.masai.repository.AdminDao;
 import com.masai.repository.AdminSessionDao;
 import com.masai.repository.CustomerDao;
+import com.masai.repository.DriverDao;
 import com.masai.repository.TripbookingDao;
 
 @Service
@@ -35,8 +38,8 @@ public class AdminServiceImpl implements AdminService {
 	TripbookingDao tripBookingDao;
 	
 	
-//	@Autowired
-//	DriverDao driverDao;
+	@Autowired
+	DriverDao driverDao;
 
 	@Autowired
 	CustomerDao customerDao;
@@ -144,11 +147,11 @@ public class AdminServiceImpl implements AdminService {
 			throw new LoginException("Not Logged in, Log in first");
 		}
 		adminSessionDao.delete(opt.get());
-		return "Log out Successfull";
+		return "Log out Successful";
 	}
 
 	@Override
-	public List<TripBooking> getAllTrips(Integer customerId, String key) throws TripBookingException, LoginException {
+	public List<TripBooking> getTripsByCustomerId(Integer customerId, String key) throws TripBookingException, LoginException {
 		
 //		Optional<AdminSession> opt = adminSessionDao.findByUuid(key);
 //		
@@ -171,34 +174,56 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<TripBooking> getTripsByCustomerId(String key) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TripBooking> getAllTrips(String key) throws LoginException, TripBookingException {
+		
+		Optional<AdminSession> opt = adminSessionDao.findByUuid(key);
+		
+		if(!opt.isPresent()) {
+			throw new LoginException("Please Login first");
+		}
+		
+		List<TripBooking> trips = tripBookingDao.findAll();
+				
+		if(trips.size() > 0) {
+			return trips;
+		}
+		else
+			throw new TripBookingException("Trips not found!");
+		
+	}
+
+
+	@Override
+	public List<Driver> getListOfDrivers(String key) throws LoginException, DriverException {
+		
+		Optional<AdminSession> opt = adminSessionDao.findByUuid(key);
+		
+		if(!opt.isPresent()) {
+			throw new LoginException("Admin is not logged in, Please login first!");
+		}
+		
+		List<Driver> listOfDrivers = driverDao.findAll();
+		
+		if(listOfDrivers.isEmpty())
+			throw new DriverException("No Drivers found");
+		
+		return listOfDrivers;
 	}
 
 	@Override
-	public List<TripBooking> getTripsByDateWise(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<TripBooking> getAllTripsByDays(Integer customerId, LocalDateTime fromDate, LocalDateTime toDate,
-			String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Driver> getListOfDrivers(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Customer> getListOfCustomers(String key) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Customer> getListOfCustomers(String key) throws LoginException, CustomerException {
+		Optional<AdminSession> opt = adminSessionDao.findByUuid(key);
+		
+		if(!opt.isPresent()) {
+			throw new LoginException("Admin is not logged in, Please login first!");
+		}
+		
+		List<Customer> listOfCustomer = customerDao.findAll();
+		
+		if(listOfCustomer.isEmpty())
+			throw new CustomerException("Customers not found");
+		
+		return listOfCustomer;
 	}
 
 

@@ -1,10 +1,12 @@
 package com.masai.service;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 import com.masai.dto.LoginDTO;
 import com.masai.exception.AdminException;
+import com.masai.exception.CustomerException;
+import com.masai.exception.DriverException;
 import com.masai.exception.LoginException;
 import com.masai.exception.TripBookingException;
 import com.masai.model.Admin;
@@ -20,11 +22,9 @@ public interface AdminService {
 	public Admin updateAdmin(Admin admin, String Username, String key) throws LoginException ;
 	public Admin deleteAdminById(Integer adminId, String key) throws LoginException;
 	public String logoutAdmin(String key) throws LoginException;
-	public List<TripBooking> getAllTrips(Integer customerId, String key) throws TripBookingException, LoginException;
-	public List<TripBooking> getTripsByCustomerId(String key);
-	public List<TripBooking> getTripsByDateWise(String key);
-	public List<TripBooking> getAllTripsByDays(Integer customerId, LocalDateTime fromDate, LocalDateTime toDate, String key);
-	public List<Driver> getListOfDrivers(String key);
-	public List<Customer> getListOfCustomers(String key);
+	public List<TripBooking> getTripsByCustomerId(Integer customerId, String key) throws TripBookingException, LoginException;
+	public List<TripBooking> getAllTrips(String key) throws LoginException, TripBookingException;
+	public List<Driver> getListOfDrivers(String key) throws LoginException, DriverException ;
+	public List<Customer> getListOfCustomers(String key) throws LoginException, CustomerException ;
 	
 }
