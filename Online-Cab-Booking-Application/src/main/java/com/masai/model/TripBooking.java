@@ -2,7 +2,9 @@ package com.masai.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,11 +34,11 @@ public class TripBooking {
 	private Double distanceInKm;
 
 	private Double bill;
-	
-//	@ManyToOne
-//	private Customer customer;
 
-//	@ManyToOne
-//	private Driver driver;
+	@ManyToOne
+	private Customer customer;
+
+	@ManyToOne
+	private Driver driver;
 
 }

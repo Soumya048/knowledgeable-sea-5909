@@ -53,20 +53,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 			throw new TripBookingException("User not found!");
 	}
 
-	@Override
-	public List<TripBooking> viewAllTripsCustomer(Integer customerId) {
-		
-//		List<TripBooking> trips = ;
-		
-		return null;
-	}
 
-	@Override
-	public TripBooking calculateBill(Integer customerId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	
-	
+
 }

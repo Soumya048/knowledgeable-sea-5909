@@ -25,8 +25,6 @@ public class Cab {
 	@NotNull
 	private String available;
 	
-	
-	
 
 }
 
