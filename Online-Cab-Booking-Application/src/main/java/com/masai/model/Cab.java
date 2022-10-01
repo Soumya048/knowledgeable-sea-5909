@@ -19,7 +19,7 @@ public class Cab {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cab_generator")
 	private	Integer cabId;
 	@NotNull
-	private String cabType;
+	private CabType cabType;
 	@NotNull
 	private Double perKmRate;
 	@NotNull

@@ -2,14 +2,14 @@ package com.masai.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +26,9 @@ public class TripBooking {
 	
 	private String fromLocation;
 	private String toLocation;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate fromDate;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate toDate;
 	
 	private String status;

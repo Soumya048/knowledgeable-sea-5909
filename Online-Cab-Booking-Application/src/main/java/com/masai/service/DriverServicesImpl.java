@@ -38,7 +38,7 @@ public class DriverServicesImpl implements DriverServices {
 
 			throw new DriverException("Driver already exist with this mobile Number");
 		}
-		
+		driver.getCab().setPerKmRate(driver.getCab().getCabType().getPrice());
 		Driver newDriver = driverDao.save(driver);
 		return newDriver;
 	}

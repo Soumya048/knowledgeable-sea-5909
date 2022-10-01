@@ -10,7 +10,9 @@ import com.masai.model.UserSession;
 @Repository
 public interface UserSessionDao extends JpaRepository<UserSession, Integer> {
 
-	public Optional<UserSession> findByUserId(Integer userId);
+//	public Optional<UserSession> findByAId(Integer userId);
 	public Optional<UserSession> findByUuId(String  uuId);
+	
+	public Optional<UserSession> findByUserId(Integer userId);
 	
 }
