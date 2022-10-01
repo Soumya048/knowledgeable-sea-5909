@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Data
 @Entity
 public class Cab {
@@ -25,6 +24,7 @@ public class Cab {
 	private Double perKmRate;
 	@NotNull
 	private String available;
+	
 	
 	
 
