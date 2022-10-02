@@ -12,8 +12,8 @@ import com.masai.model.UserSession;
 public interface CustomerService  {
 	
 	public Customer insertCustomer(Customer customer) throws CustomerException;     
-	public Customer updateCustomer(Customer customer, String Key) throws CustomerException;                                          
-	public Customer deleteCustomer(int customerId, String key) throws CustomerException;                                                  
+	public Customer updateCustomer(Customer customer, String Key) throws CustomerException, LoginException;                                          
+	public Customer deleteCustomer(int customerId, String key) throws CustomerException, LoginException;                                                  
 	public UserSession loginCustomer(LoginDTO customer) throws LoginException,CustomerException ;
 	public String logoutCustomer(String key)throws CustomerException;
 	public TripBooking bookTrip(TripBooking trip, String key)throws CustomerException ;
