@@ -10,13 +10,12 @@ import com.masai.model.TripBooking;
 import com.masai.model.UserSession;
 
 public interface CustomerService  {
-	Customer insertCustomer(Customer customer) throws CustomerException;     
-	Customer updateCustomer(Customer customer, String Key) throws CustomerException;                                          
-	  Customer deleteCustomer(int customerId) throws CustomerException;                                                  
-
-	  
-	UserSession  loginCustomer(LoginDTO customer) throws LoginException,CustomerException ;
-	String logoutCustomer(String key)throws CustomerException;
-	TripBooking bookTrip(TripBooking trip, String key)throws CustomerException ;
+	
+	public Customer insertCustomer(Customer customer) throws CustomerException;     
+	public Customer updateCustomer(Customer customer, String Key) throws CustomerException;                                          
+	public Customer deleteCustomer(int customerId, String key) throws CustomerException;                                                  
+	public UserSession loginCustomer(LoginDTO customer) throws LoginException,CustomerException ;
+	public String logoutCustomer(String key)throws CustomerException;
+	public TripBooking bookTrip(TripBooking trip, String key)throws CustomerException ;
 	  
 }

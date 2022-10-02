@@ -19,17 +19,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.dto.AdminDTO;
+import com.masai.dto.CabDTO;
 import com.masai.dto.LoginDTO;
+import com.masai.exception.CabException;
 import com.masai.exception.CustomerException;
 import com.masai.exception.DriverException;
 import com.masai.exception.LoginException;
 import com.masai.exception.TripBookingException;
 import com.masai.model.Admin;
 import com.masai.model.AdminSession;
+import com.masai.model.Cab;
+import com.masai.model.CabType;
 import com.masai.model.Customer;
 import com.masai.model.Driver;
 import com.masai.model.TripBooking;
 import com.masai.service.AdminService;
+import com.masai.service.CabService;
 
 
 
@@ -39,6 +44,9 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private CabService cabService;
 
 	
 	@PostMapping("/register")
@@ -71,12 +79,6 @@ public class AdminController {
 		return new ResponseEntity<Admin>(deletedAdmin, HttpStatus.OK);
 	}
 	
-	@GetMapping("/trip/{customerId}")
-	public ResponseEntity<List<TripBooking>> getTripsByCustomerIdHandler(@PathVariable Integer customerId, @RequestParam String key) throws TripBookingException, LoginException{
-		List<TripBooking> tripsOfCustomer = adminService.getTripsByCustomerId(customerId, key);
-		return new ResponseEntity<List<TripBooking>>(tripsOfCustomer, HttpStatus.OK);
-	}
-	
 	@GetMapping("/trips")
 	public ResponseEntity<List<TripBooking>> getAllTripsHandler(@RequestParam String key) throws LoginException, TripBookingException {
 		List<TripBooking> allTrips = adminService.getAllTrips(key);
@@ -95,5 +97,16 @@ public class AdminController {
 		return new ResponseEntity<List<Customer>>(allCustomers, HttpStatus.OK);
 	}
 	
+	@GetMapping("/cabs/{type}")
+	public ResponseEntity<List<Cab>> getCabsByCabTypeHandler(@PathVariable CabType type, @RequestParam String key) throws CabException, LoginException {
+		List<Cab> cabs = cabService.viewCabsOfType(type, key);
+		return new ResponseEntity<List<Cab>>(cabs, HttpStatus.OK);
+	}
+	
+	@GetMapping("/coutCabs/{type}")
+	public ResponseEntity<CabDTO> countCabsByCabTypeHandler(@PathVariable CabType type, @RequestParam String key) throws CabException, LoginException {
+		CabDTO cabdto = cabService.countCabsOfType(type, key);
+		return new ResponseEntity<CabDTO>(cabdto, HttpStatus.OK);
+	}
 	
 }

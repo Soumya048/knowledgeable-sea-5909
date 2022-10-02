@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 	
 	
 	@ExceptionHandler(LoginException.class)
-	public ResponseEntity<ErrorDetails> accountExceptionHandler(LoginException le, WebRequest req) {
+	public ResponseEntity<ErrorDetails> loginExceptionHandler(LoginException le, WebRequest req) {
 		ErrorDetails err = new ErrorDetails();
 		
 		err.setTimestamp(LocalDateTime.now());
@@ -24,10 +24,45 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
 	}
+	
+	
+	@ExceptionHandler(CustomerException.class)
+	public ResponseEntity<ErrorDetails> customerExceptionHandler(CustomerException ce, WebRequest req) {
+		ErrorDetails err = new ErrorDetails();
+		
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(ce.getMessage());
+		err.setDetails(req.getDescription(false));
+		
+		return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(AdminException.class)
+	public ResponseEntity<ErrorDetails> adminExceptionHandler(AdminException ae, WebRequest req) {
+		ErrorDetails err = new ErrorDetails();
+		
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(ae.getMessage());
+		err.setDetails(req.getDescription(false));
+		
+		return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(CabException.class)
+	public ResponseEntity<ErrorDetails> cabExceptionHandler(CabException ce, WebRequest req) {
+		ErrorDetails err = new ErrorDetails();
+		
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(ce.getMessage());
+		err.setDetails(req.getDescription(false));
+		
+		return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
+	}
+	
 	
 	
 	@ExceptionHandler(TripBookingException.class)
-	public ResponseEntity<ErrorDetails> accountExceptionHandler(TripBookingException le, WebRequest req) {
+	public ResponseEntity<ErrorDetails> tripBookingExceptionHandler(TripBookingException le, WebRequest req) {
 		ErrorDetails err = new ErrorDetails();
 		
 		err.setTimestamp(LocalDateTime.now());
@@ -36,14 +71,6 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
 	}
-	
-
-	
-	
-	
-	
-	
-	
 	
 	
 	// No handler found exception

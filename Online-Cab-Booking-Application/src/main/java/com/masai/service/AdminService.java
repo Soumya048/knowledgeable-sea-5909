@@ -17,12 +17,11 @@ import com.masai.model.TripBooking;
 
 public interface AdminService {
 
-	public Admin adminRegister(Admin admin);
+	public Admin adminRegister(Admin admin) throws AdminException;
 	public AdminSession adminLogin(LoginDTO loginDto) throws LoginException;
 	public Admin updateAdmin(Admin admin, String Username, String key) throws LoginException ;
 	public Admin deleteAdminById(Integer adminId, String key) throws LoginException;
 	public String logoutAdmin(String key) throws LoginException;
-	public List<TripBooking> getTripsByCustomerId(Integer customerId, String key) throws TripBookingException, LoginException;
 	public List<TripBooking> getAllTrips(String key) throws LoginException, TripBookingException;
 	public List<Driver> getListOfDrivers(String key) throws LoginException, DriverException ;
 	public List<Customer> getListOfCustomers(String key) throws LoginException, CustomerException ;

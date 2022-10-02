@@ -102,9 +102,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 	}
 	
-	
-	
-	
 	@Override
 	public TripBooking bookTrip(TripBooking trip, String key) throws CustomerException {
 		TripBooking res = null;
@@ -145,14 +142,27 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer updateCustomer(Customer customer,String Key) {
+	public Customer updateCustomer(Customer customer,String key) throws CustomerException {
+		
+		Optional<UserSession> otp = sessionDao.findByUuId(key);
+		if (otp.isEmpty())
+			throw new CustomerException("User is not logged in, Please login first!");
+		else {
+			
+		}
 		return null;
 	}	
 	
 
 	@Override
-	public Customer deleteCustomer(int customerId) {
-		// TODO Auto-generated method stub
+	public Customer deleteCustomer(int customerId, String key) throws CustomerException {
+		Optional<UserSession> otp = sessionDao.findByUuId(key);
+		if (otp.isEmpty())
+			throw new CustomerException("User is not logged in, Please login first!");
+		else {
+			
+		}
+		
 		return null;
 	}
 

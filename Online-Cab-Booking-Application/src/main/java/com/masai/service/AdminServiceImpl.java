@@ -16,6 +16,8 @@ import com.masai.exception.LoginException;
 import com.masai.exception.TripBookingException;
 import com.masai.model.Admin;
 import com.masai.model.AdminSession;
+import com.masai.model.Cab;
+import com.masai.model.CabType;
 import com.masai.model.Customer;
 import com.masai.model.Driver;
 import com.masai.model.TripBooking;
@@ -46,7 +48,15 @@ public class AdminServiceImpl implements AdminService {
 	
 	
 	@Override
-	public Admin adminRegister(Admin admin) {
+	public Admin adminRegister(Admin admin) throws AdminException {
+		
+		String adminMobile = admin.getAbstractUser().getMobile();
+		
+		Optional<Admin> opt = adminDao.findByAbstractUserMobile(adminMobile);
+		
+		if(opt.isPresent())
+			throw new AdminException("Admin already exist with" + adminMobile);
+		
 		Admin registeredAdmin = adminDao.save(admin);
 		return registeredAdmin;
 	}
@@ -150,28 +160,6 @@ public class AdminServiceImpl implements AdminService {
 		return "Log out Successful";
 	}
 
-	@Override
-	public List<TripBooking> getTripsByCustomerId(Integer customerId, String key) throws TripBookingException, LoginException {
-		
-//		Optional<AdminSession> opt = adminSessionDao.findByUuid(key);
-//		
-//		if(!opt.isPresent()) {
-//			throw new LoginException("Please Login first");
-//		}
-//		
-//		Customer existingCustomer = customerDao.findById(customerId);
-//		
-//		
-//		List<TripBooking> allTrips = tripBookingDao.findAll();
-//		
-//		if(allTrips.size() > 0) {
-//			return allTrips;
-//		}
-//		else
-//			throw new TripBookingException("No trips found");
-		
-		return null;
-	}
 
 	@Override
 	public List<TripBooking> getAllTrips(String key) throws LoginException, TripBookingException {
@@ -225,7 +213,6 @@ public class AdminServiceImpl implements AdminService {
 		
 		return listOfCustomer;
 	}
-
-
+	
 
 }

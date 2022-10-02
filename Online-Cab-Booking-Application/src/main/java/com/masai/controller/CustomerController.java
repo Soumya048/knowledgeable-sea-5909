@@ -21,10 +21,9 @@ import com.masai.service.CustomerService;
 @RequestMapping("/customer")
 @RestController
 public class CustomerController {
+	
 	@Autowired
 	private CustomerService customerService;
-	
-//	@Autowired
 	
 	
 	@PostMapping("/register")
@@ -48,12 +47,8 @@ public class CustomerController {
 	}
 	@PostMapping("/booktrip")
 	public ResponseEntity<TripBooking> bookTrip(@RequestBody TripBooking trip, @RequestParam String key) throws CustomerException {
-
 		TripBooking bookedTrip = customerService.bookTrip(trip, key);
-
-		ResponseEntity<TripBooking> confirmed = new ResponseEntity<TripBooking>(bookedTrip, HttpStatus.CREATED);
-
-		return confirmed;
+		return new ResponseEntity<TripBooking>(bookedTrip, HttpStatus.CREATED);
 	}
 	
 
