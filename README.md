@@ -1,6 +1,6 @@
 # Online Cab Booking Application
 
-REST API for an Online Cab Booking Application. Customer can book any type of cab to traveling different destinations. This API performs all the fundamental CRUD operations. There are validations for input data. and usersession key to access the API.
+REST API for an Online Cab Booking Application. Customer can book any type of cab to traveling different destinations. This API performs all the fundamental CRUD operations. There are validations for input data. and usersession uuid to access the API.
 
 ## Tech Stack
 - Java
@@ -34,10 +34,23 @@ REST API for an Online Cab Booking Application. Customer can book any type of ca
 
 ## Features
 
--
--
-
-
+- Customer, Driver and Admin authentication & validation with session uuid.
+- Admin Features:
+  - Admin can register, login, logout, update and delete accounts.
+  - Admin have the control over the entire application.
+  - Admin can manage Cab, Driver, Booking.
+  - Admin can access the details of different customers, drivers and trip bookings
+  - Only logged in Admin can access all features of Admin.
+- Customer Features:
+  - Customer can register themselves with application, logging and logout in to the application
+  - Customers can book cabs for the desired location from a certain location and can cancel the booked trip. 
+  - Customer can update, delete their account.
+  - Only logged in user can access all customer features.
+- Driver Features:
+  - Driver can register themselves with application, login and logout in to the application
+  - Drver can update the trip status. 
+  - Driver can update, delete their account.
+  - Only logged in driver can access all driver features.
 
 ## Installation and Run
 
