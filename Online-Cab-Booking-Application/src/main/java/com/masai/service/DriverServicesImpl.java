@@ -15,6 +15,7 @@ import com.masai.model.Admin;
 import com.masai.model.AdminSession;
 import com.masai.model.Driver;
 import com.masai.model.DriverSession;
+import com.masai.repository.AdminSessionDao;
 import com.masai.repository.DriverDao;
 import com.masai.repository.DriverSessionDao;
 
@@ -26,6 +27,9 @@ public class DriverServicesImpl implements DriverServices {
 
 	@Autowired
 	DriverSessionDao driverSessionDao;
+	
+	@Autowired
+	AdminSessionDao adminSessionDao;
 
 	
 	@Override
@@ -47,21 +51,21 @@ public class DriverServicesImpl implements DriverServices {
 
 	@Override
 	public String removeDriver(String name, String key) throws LoginException, DriverException {
-		Optional<DriverSession> opt = driverSessionDao.findByUuid(key);
+		Optional<AdminSession> opt = adminSessionDao.findByUuid(key);
 
-		if (opt.isEmpty()) {
-			throw new LoginException("Driver is not loged in ,Please log in first");
+		if (!opt.isPresent()) {
+			throw new LoginException("Admin is not loged in ,Please log in first");
 		}
 
-		Optional<Driver> driveropt = driverDao.findByUserUsername(name);
-		if (driveropt == null) {
-			System.out.println("No driver exist");
+		Optional<Driver> driverOpt = driverDao.findByUserUsername(name);
+		if (!driverOpt.isPresent()) {
 			throw new DriverException("Driver not found with this name");
 		}
-		Driver deletDriver = driveropt.get();
+		
+		Driver deleteDriver = driverOpt.get();
 
-		driverDao.delete(deletDriver);
-		return "Driver :" + name + "deleted from the table";
+		driverDao.delete(deleteDriver);
+		return "Driver :" + name + "deleted from the database";
 	}
 	
 	@Override
@@ -71,15 +75,17 @@ public class DriverServicesImpl implements DriverServices {
 		if (opt.isEmpty()) {
 			throw new LoginException("Driver is not loged in ,Please log in first");
 		}
-
+		
 		Driver updateddriver = driverDao.save(driver);
 		return updateddriver;
 	}
 	
 	@Override
 	public String updateStatus(String newStatus, String key) throws LoginException, DriverException {
+		
 		String status = null;
-		String msg = null;
+		String messsage = null;
+		
 		Optional<DriverSession> ott = driverSessionDao.findByUuid(key);
 
 		if (ott.isEmpty()) {
@@ -88,23 +94,25 @@ public class DriverServicesImpl implements DriverServices {
 
 		if (newStatus.equalsIgnoreCase("Y")) {
 			status = "YES";
-			msg = "Your Status is Changed to Online.";
+			messsage = "Your Status is Changed to Online.";
 		} else if (newStatus.equalsIgnoreCase("N")) {
 			status = "NO";
-			msg = "Your Status is Changed to Offline.";
+			messsage = "Your Status is Changed to Offline.";
 
 		} else {
 			throw new DriverException("Please select 'Y' or 'N' only.");
 		}
 
 		DriverSession driverSession = ott.get();
+		
 		Integer driverId = driverSession.getDriverId();
 		Optional<Driver> existingDriverOpt = driverDao.findById(driverId);
 		Driver existingDriver = existingDriverOpt.get();
+		
 		existingDriver.getCab().setAvailable(status);
 		driverDao.save(existingDriver);
 
-		return msg;
+		return messsage;
 	}
 
 	@Override

@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.masai.dto.LoginDTO;
 import com.masai.exception.CustomerException;
 import com.masai.exception.LoginException;
+import com.masai.exception.TripBookingException;
 import com.masai.model.Customer;
 import com.masai.model.TripBooking;
 import com.masai.model.UserSession;
 import com.masai.service.CustomerService;
+import com.masai.service.TripBookingService;
 
 @RequestMapping("/customer")
 @RestController
@@ -30,6 +32,8 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	
+	@Autowired
+	private TripBookingService tripBookingService;
 	
 	@PostMapping("/register")
 	public ResponseEntity<Customer>registerCustomer(@RequestBody Customer customer) throws CustomerException {
@@ -66,7 +70,12 @@ public class CustomerController {
 	public ResponseEntity<Customer> deleteCustmorByIdHandler(@PathVariable Integer customerId,@RequestParam String key)throws LoginException, CustomerException{
 		Customer deleteCustomer = customerService.deleteCustomer(customerId, key);
 		return new ResponseEntity<Customer>(deleteCustomer, HttpStatus.OK);
-		
 	}
-
+	
+	@PutMapping("cancel/{tripId}")
+	public ResponseEntity<String> cancelTripHandler(@PathVariable Integer tripId, @RequestParam String key) throws LoginException, TripBookingException {
+		String canceledTrip = customerService.cancelTrip(tripId, key);
+		return new ResponseEntity<String>(canceledTrip, HttpStatus.OK);
+	}
+	
 }

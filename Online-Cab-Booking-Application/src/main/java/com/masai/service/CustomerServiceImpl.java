@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.masai.dto.LoginDTO;
 import com.masai.exception.CustomerException;
 import com.masai.exception.LoginException;
+import com.masai.exception.TripBookingException;
 import com.masai.model.Customer;
 import com.masai.model.Driver;
 import com.masai.model.TripBooking;
@@ -67,7 +68,8 @@ public class CustomerServiceImpl implements CustomerService {
 			
 
 			return sessionDao.save(newSession);
-		} else {
+		} 
+		else {
 			throw new LoginException("Password Incorrect. Try again.");
 		}
 
@@ -148,25 +150,19 @@ public class CustomerServiceImpl implements CustomerService {
 		if (otp.isEmpty())
 			throw new CustomerException("User is not logged in, Please login first!");
 		else {
+		     Optional<Customer> custOtp = customerDao.findById(customer.getCustomerId());
 		     
-		    	 Optional<Customer> custOtp = customerDao.findById(customer.getCustomerId());
-		    	 System.out.println(custOtp.get());     
-		
-			if(custOtp.isPresent()) {
-					
+		     if(custOtp.isPresent()) {	
 				Integer id = customer.getCustomerId();
 				Customer newData = new Customer();
 				newData.setCustomerId(id);
 				newData.setAbstractUser(customer.getAbstractUser());
 				
-				 update = customerDao.save(newData);
-				 return update;
+				update = customerDao.save(newData);
+				return update;
 			}
-			
-		else {
-			throw new CustomerException("Customer not found");
-		}
-		   
+		    else 
+		    	throw new CustomerException("Customer not found");
 		}
 	}	
 	
@@ -182,14 +178,38 @@ public class CustomerServiceImpl implements CustomerService {
 			
 			Optional<Customer> custOtp = customerDao.findById(customerId);
 			
-			if(custOtp.isPresent()) {
-				existingCustomer = custOtp.get();
-				customerDao.delete(existingCustomer);
+		if(custOtp.isPresent()) {
+			existingCustomer = custOtp.get();
+			customerDao.delete(existingCustomer);
 				
-				return existingCustomer;
-			}
-			else
+			return existingCustomer;
+		}
+		else
 			throw new CustomerException("Custmor not found with id: "+customerId);
+	}
+
+
+	@Override
+	public String cancelTrip(Integer tripBooingId, String key) throws LoginException, TripBookingException {
 		
-}
+		Optional<UserSession> Opt = sessionDao.findByUuId(key);
+		
+		if(!Opt.isPresent()) {
+			throw new LoginException("User is not logged in, Please login first");
+		}
+		
+		Optional<TripBooking> tripOpt = tb.findById(tripBooingId);
+		
+		if(!tripOpt.isPresent()) {
+			throw new TripBookingException("Trip not found with id:" + tripBooingId);
+		}
+		
+		TripBooking existingTrip = tripOpt.get();
+		existingTrip.setStatus("cancelled");
+		tb.save(existingTrip);
+	
+		return "Your Trip is Canceled Successfully";
+	}
+	
+	
 }

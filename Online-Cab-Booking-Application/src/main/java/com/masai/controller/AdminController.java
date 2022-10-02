@@ -35,6 +35,8 @@ import com.masai.model.Driver;
 import com.masai.model.TripBooking;
 import com.masai.service.AdminService;
 import com.masai.service.CabService;
+import com.masai.service.DriverServices;
+import com.masai.service.TripBookingService;
 
 
 
@@ -47,6 +49,12 @@ public class AdminController {
 	
 	@Autowired
 	private CabService cabService;
+	
+	@Autowired
+	private DriverServices driverServices;
+	
+	@Autowired
+	private TripBookingService tripBookingService;
 
 	
 	@PostMapping("/register")
@@ -108,5 +116,18 @@ public class AdminController {
 		CabDTO cabdto = cabService.countCabsOfType(type, key);
 		return new ResponseEntity<CabDTO>(cabdto, HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/driver/{username}")
+	public ResponseEntity<String> removeDriverHandler(@PathVariable String usernmae, @RequestParam String key) throws LoginException, DriverException {
+		String removedDriver = driverServices.removeDriver(usernmae, key);
+		return new ResponseEntity<String>(removedDriver, HttpStatus.ACCEPTED);
+	}
+	
+	@DeleteMapping("/trip/{id}")
+	public ResponseEntity<TripBooking> deleteTripHandler(@PathVariable Integer id, @RequestParam String key) throws LoginException, TripBookingException {
+		TripBooking deletedTrip = tripBookingService.deleteTripBooking(id, key);
+		return new ResponseEntity<TripBooking>(deletedTrip, HttpStatus.ACCEPTED);
+	}
+	
 	
 }
