@@ -1,10 +1,15 @@
 package com.masai.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,5 +56,17 @@ public class CustomerController {
 		return new ResponseEntity<TripBooking>(bookedTrip, HttpStatus.CREATED);
 	}
 	
+	@PutMapping("/update")
+	public ResponseEntity<Customer> updateCustmorHandler(@Valid @RequestBody Customer customer, @RequestParam String key) throws LoginException, CustomerException{
+		Customer updateCustmor = customerService.updateCustomer(customer, key);
+		return new ResponseEntity<Customer>(updateCustmor, HttpStatus.ACCEPTED);
+	}
+	
+	@DeleteMapping("/delete/{customerId}")
+	public ResponseEntity<Customer> deleteCustmorByIdHandler(@PathVariable Integer customerId,@RequestParam String key)throws LoginException, CustomerException{
+		Customer deleteCustomer = customerService.deleteCustomer(customerId, key);
+		return new ResponseEntity<Customer>(deleteCustomer, HttpStatus.OK);
+		
+	}
 
 }

@@ -142,28 +142,54 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer updateCustomer(Customer customer,String key) throws CustomerException {
-		
+	public Customer updateCustomer(Customer customer,String key) throws CustomerException, LoginException {
+		Customer update = null;
 		Optional<UserSession> otp = sessionDao.findByUuId(key);
 		if (otp.isEmpty())
 			throw new CustomerException("User is not logged in, Please login first!");
 		else {
+		     
+		    	 Optional<Customer> custOtp = customerDao.findById(customer.getCustomerId());
+		    	 System.out.println(custOtp.get());     
+		
+			if(custOtp.isPresent()) {
+					
+				Integer id = customer.getCustomerId();
+				Customer newData = new Customer();
+				newData.setCustomerId(id);
+				newData.setAbstractUser(customer.getAbstractUser());
+				
+				 update = customerDao.save(newData);
+				 return update;
+			}
 			
+		else {
+			throw new CustomerException("Customer not found");
 		}
-		return null;
+		   
+		}
 	}	
 	
 
 	@Override
-	public Customer deleteCustomer(int customerId, String key) throws CustomerException {
+	public Customer deleteCustomer(int customerId, String key) throws CustomerException, LoginException {
+		
+		Customer existingCustomer = null;
+	
 		Optional<UserSession> otp = sessionDao.findByUuId(key);
 		if (otp.isEmpty())
 			throw new CustomerException("User is not logged in, Please login first!");
-		else {
 			
-		}
+			Optional<Customer> custOtp = customerDao.findById(customerId);
+			
+			if(custOtp.isPresent()) {
+				existingCustomer = custOtp.get();
+				customerDao.delete(existingCustomer);
+				
+				return existingCustomer;
+			}
+			else
+			throw new CustomerException("Custmor not found with id: "+customerId);
 		
-		return null;
-	}
-
+}
 }
