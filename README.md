@@ -64,7 +64,7 @@ https://localhost:8088/
 ```
 
 ```
-https://localhost:8088/swagger-ui/#
+http://localhost:8088/swagger-ui/
 ```
 
 ## Contributors
