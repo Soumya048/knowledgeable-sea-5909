@@ -21,7 +21,7 @@ REST API for an Online Cab Booking Application. Customer can book any type of ca
 - Cab Management Module
 - Trip Booking Management Module
 
-## ER diagram
+## ER Diagram
 
 ![CW_erd-Page-1 drawio](https://user-images.githubusercontent.com/91946820/193461776-93cf301d-6720-41d5-b879-2f65c6eda855.png)
 
