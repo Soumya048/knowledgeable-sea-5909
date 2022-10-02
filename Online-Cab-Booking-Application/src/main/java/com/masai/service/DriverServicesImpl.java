@@ -50,7 +50,6 @@ public class DriverServicesImpl implements DriverServices {
 		Optional<DriverSession> opt = driverSessionDao.findByUuid(key);
 
 		if (opt.isEmpty()) {
-			System.out.println("There  is No driver in the list");
 			throw new LoginException("Driver is not loged in ,Please log in first");
 		}
 
