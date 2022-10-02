@@ -1,16 +1,6 @@
 # Online Cab Booking Application
 
 
-
-## ER diagram
-
-![CW_erd-Page-1 drawio](https://user-images.githubusercontent.com/91946820/193461776-93cf301d-6720-41d5-b879-2f65c6eda855.png)
-
-
-## Service Layer
-
-![CW_erd-Page-2](https://user-images.githubusercontent.com/91946820/193463654-153d1ef7-6a4f-45eb-9651-3da6cf4ee6cf.jpg)
-
 ## Tech Stack
 - Java
 - Spring Framework
@@ -29,6 +19,17 @@
 - Driver Management Module
 - Cab Management Module
 - Trip Booking Management Module
+
+## ER diagram
+
+![CW_erd-Page-1 drawio](https://user-images.githubusercontent.com/91946820/193461776-93cf301d-6720-41d5-b879-2f65c6eda855.png)
+
+
+## Service Layer
+
+![CW_erd-Page-2](https://user-images.githubusercontent.com/91946820/193463654-153d1ef7-6a4f-45eb-9651-3da6cf4ee6cf.jpg)
+
+
 
 ## Features
 
