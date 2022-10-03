@@ -1,6 +1,9 @@
-# Online Cab Booking Application
+# Online Cab Booking Application                                                          
+
 
 REST API for an Online Cab Booking Application. Customer can book any type of cab to traveling different destinations. This API performs all the fundamental CRUD operations. There are validations for input data. and usersession uuid to access the API.
+
+![Badge](https://visitor-counter-badge.vercel.app/api/Soumya048/knowledgeable-sea-5909/)
 
 ## Tech Stack
 - Java
@@ -95,7 +98,6 @@ http://localhost:8088/swagger-ui/
 - [Washim Raza](https://github.com/washimraza1234)
 - [Juli Kumari](https://github.com/Julikumari048)
 - [Nitin](https://github.com/nitinaggarwal2512)
-
 
 
 
