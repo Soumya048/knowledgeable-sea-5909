@@ -39,23 +39,23 @@ REST API for an Online Cab Booking Application. Customer can book any type of ca
 
 ## Features
 
-- Customer, Driver and Admin authentication & validation with session uuid.
+- Customer, Driver and Admin authentication & validation with session UUID.
 - Admin Features:
-  - Admin can register, login, logout, update and delete accounts.
-  - Admin have the control over the entire application.
-  - Admin can manage Cab, Driver, Booking.
+  - Admin can register, log in, log out, update and delete accounts
+  - Admin have control over the entire application
+  - Admin can manage Cab, Driver, and Booking
   - Admin can access the details of different customers, drivers and trip bookings
-  - Only logged in Admin can access all features of Admin.
+  - Only logged-in Admin can access all features of Admin
 - Customer Features:
-  - Customer can register themselves with application, logging and logout in to the application
-  - Customers can book cabs for the desired location from a certain location and can cancel the booked trip. 
-  - Customer can update, delete their account.
-  - Only logged in user can access all customer features.
+  - Customers can register themselves with the application, logging in and logout into the application
+  - Customers can book cabs for the desired location from a specific location and can cancel the booked trip
+  - Customers can update, or delete their accounts
+  - Only logged-in users can access all customer features
 - Driver Features:
-  - Driver can register themselves with application, login and logout in to the application
-  - Drver can update the trip status. 
-  - Driver can update, delete their account.
-  - Only logged in driver can access all driver features.
+  - Drivers can register themselves with the application, log in and log out into the application
+  - Driver can update the trip status
+  - Drivers can update and delete their accounts
+  - Only logged-in drivers can access all driver features
 
 ## Installation and Run
 
