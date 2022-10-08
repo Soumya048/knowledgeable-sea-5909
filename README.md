@@ -53,7 +53,7 @@ REST API for an Online Cab Booking Application. Customer can book any type of ca
   - Only logged-in users can access all customer features
 - Driver Features:
   - Drivers can register themselves with the application, log in and log out into the application
-  - Driver can update the trip status
+  - Drivers can update the trip status
   - Drivers can update and delete their accounts
   - Only logged-in drivers can access all driver features
 
